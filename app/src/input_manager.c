@@ -7,7 +7,6 @@
 #include "event_converter.h"
 #include "util/lock.h"
 #include "util/log.h"
-#include <OpenGLES/ES2/gl.h>
 
 static const int ACTION_DOWN = 1;
 static const int ACTION_UP = 1 << 1;

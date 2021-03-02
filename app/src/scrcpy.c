@@ -76,14 +76,19 @@ sdl_init_and_configure(bool display, const char *render_driver,
                        bool disable_screensaver) {
     uint32_t flags = display ? SDL_INIT_VIDEO : SDL_INIT_EVENTS;
     if (SDL_Init(flags)) {
-        FILE * failure_description;
-        failure_description = fopen("/var/mobile/failure_reason.txt", "w");
-        fputs(SDL_GetError(), failure_description);
-        fclose(failure_description);
+        LOGC("Could not initialize SDL: %s", SDL_GetError());
         return false;
     }
 
     atexit(SDL_Quit);
+
+#ifdef _WIN32
+    // Clean up properly on Ctrl+C on Windows
+    bool ok = SetConsoleCtrlHandler(windows_ctrl_handler, TRUE);
+    if (!ok) {
+        LOGW("Could not set Ctrl+C handler");
+    }
+#endif // _WIN32
 
     if (!display) {
         return true;
@@ -319,8 +324,8 @@ scrcpy(const struct scrcpy_options *options) {
         .log_level = options->log_level,
         .crop = options->crop,
         .port_range = options->port_range,
-        .max_size = 640,
-        .bit_rate = 800000,
+        .max_size = options->max_size,
+        .bit_rate = options->bit_rate,
         .max_fps = options->max_fps,
         .lock_video_orientation = options->lock_video_orientation,
         .control = options->control,

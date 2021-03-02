@@ -4,6 +4,9 @@
 #include <stdbool.h>
 #include <unistd.h>
 #include <libavformat/avformat.h>
+#ifndef IOS
+#define SDL_MAIN_HANDLED // avoid link error on Linux Windows Subsystem
+#endif
 #include <SDL2/SDL.h>
 
 #include "config.h"
@@ -47,15 +50,41 @@ convert_log_level_to_sdl(enum sc_log_level level) {
 }
 
 
-int main(int argc, char** argv) {
+int
+main(int argc, char *argv[]) {
+#ifdef __WINDOWS__
+    // disable buffering, we want logs immediately
+    // even line buffering (setvbuf() with mode _IOLBF) is not sufficient
+    setbuf(stdout, NULL);
+    setbuf(stderr, NULL);
+#endif
+
     struct scrcpy_cli_args args = {
         .opts = SCRCPY_OPTIONS_DEFAULT,
         .help = false,
         .version = false,
     };
 
+#ifndef NDEBUG
+    args.opts.log_level = SC_LOG_LEVEL_DEBUG;
+#endif
+
+    if (!scrcpy_parse_args(&args, argc, argv)) {
+        return 1;
+    }
+
     SDL_LogPriority sdl_log = convert_log_level_to_sdl(args.opts.log_level);
     SDL_LogSetPriority(SDL_LOG_CATEGORY_APPLICATION, sdl_log);
+
+    if (args.help) {
+        scrcpy_print_usage(argv[0]);
+        return 0;
+    }
+
+    if (args.version) {
+        print_version();
+        return 0;
+    }
 
     LOGI("scrcpy " SCRCPY_VERSION " <https://github.com/Genymobile/scrcpy>");
 
@@ -64,10 +93,10 @@ int main(int argc, char** argv) {
 #endif
 
     if (avformat_network_init()) {
-        return 25;
+        return 1;
     }
 
-    int res = scrcpy(&args.opts);
+    int res = scrcpy(&args.opts) ? 0 : 1;
 
     avformat_network_deinit(); // ignore failure
 

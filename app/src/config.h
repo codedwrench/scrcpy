@@ -5,7 +5,7 @@
 
 #pragma once
 
-#define DEFAULT_BIT_RATE 8000000
+#define DEFAULT_BIT_RATE 800000
 
 #define DEFAULT_LOCAL_PORT_RANGE_FIRST 27183
 
@@ -13,15 +13,17 @@
 
 #define DEFAULT_LOCK_VIDEO_ORIENTATION -1
 
-#define DEFAULT_MAX_SIZE 0
+#define DEFAULT_MAX_SIZE 640
 
 #define HIDPI_SUPPORT
+
+#define IOS
 
 #undef NDEBUG
 
 #undef PORTABLE
 
-#define PREFIX "/usr/local"
+#define PREFIX "/usr/lib"
 
 #define SCRCPY_VERSION "1.17"
 

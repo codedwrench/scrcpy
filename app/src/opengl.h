@@ -2,10 +2,12 @@
 #define SC_OPENGL_H
 
 #include <stdbool.h>
-#include <SDL2/SDL_opengl.h>s
-#include <OpenGLES/ES2/gl.h>
-
+#include <SDL2/SDL_opengl.h>
 #include "config.h"
+
+#ifdef IOS
+#include <OpenGLES/ES2/gl.h>
+#endif
 
 struct sc_opengl {
     const char *version;

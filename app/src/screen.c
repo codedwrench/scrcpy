@@ -214,7 +214,12 @@ create_texture(struct screen *screen) {
         struct sc_opengl *gl = &screen->gl;
 
         SDL_GL_BindTexture(texture, NULL, NULL);
-
+#ifndef IOS
+        // Enable trilinear filtering for downscaling
+        gl->TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
+                          GL_LINEAR_MIPMAP_LINEAR);
+        gl->TexParameterf(GL_TEXTURE_2D, GL_TEXTURE_LOD_BIAS, -1.f);
+#endif
         SDL_GL_UnbindTexture(texture);
     }
 

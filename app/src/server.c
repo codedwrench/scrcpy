@@ -16,6 +16,10 @@
 #include "util/net.h"
 #include "util/str_util.h"
 
+#ifdef IOS
+#include <CoreFoundation/CoreFoundation.h>
+#endif
+
 #define SOCKET_NAME "scrcpy"
 #define SERVER_FILENAME "scrcpy-server"
 
@@ -45,8 +49,17 @@ get_server_path(void) {
     }
 
 #ifndef PORTABLE
-    LOGD("Using server: " DEFAULT_SERVER_PATH);
-    char *server_path = SDL_strdup(DEFAULT_SERVER_PATH);
+#ifdef IOS
+    char ios_bundle_path[PATH_MAX];
+
+    CFBundleRef bundle = CFBundleGetMainBundle();
+    CFURLRef server_url = CFBundleCopyResourceURL(bundle, CFSTR(SERVER_FILENAME), NULL, NULL);
+    CFURLGetFileSystemRepresentation(server_url, true, (char*)ios_bundle_path, PATH_MAX);
+
+    char* server_path = SDL_strdup(ios_bundle_path);
+#else
+    char* server_path = SDL_strdup(DEFAULT_SERVER_PATH);
+#endif
     if (!server_path) {
         LOGE("Could not allocate memory");
         return NULL;
@@ -54,7 +67,6 @@ get_server_path(void) {
     // the absolute path is hardcoded
     return server_path;
 #else
-
     // use scrcpy-server in the same directory as the executable
     char *executable_path = get_executable_path();
     if (!executable_path) {
