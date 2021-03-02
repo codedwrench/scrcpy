@@ -3,6 +3,7 @@
 
 #include <stdbool.h>
 #include <SDL2/SDL_opengl.h>
+
 #include "config.h"
 
 #ifdef IOS

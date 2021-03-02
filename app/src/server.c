@@ -67,6 +67,7 @@ get_server_path(void) {
     // the absolute path is hardcoded
     return server_path;
 #else
+
     // use scrcpy-server in the same directory as the executable
     char *executable_path = get_executable_path();
     if (!executable_path) {

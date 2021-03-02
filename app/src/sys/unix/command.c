@@ -9,9 +9,9 @@
 # define _DARWIN_C_SOURCE // for strdup(), strtok_r(), memset_pattern4()
 #endif
 
-#include "../../command.h"
+#include "command.h"
 
-#include "../../config.h"
+#include "config.h"
 
 #include <errno.h>
 #include <fcntl.h>
@@ -24,7 +24,7 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-#include "../../util/log.h"
+#include "util/log.h"
 
 bool
 cmd_search(const char *file) {
