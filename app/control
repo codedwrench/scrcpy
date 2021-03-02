@@ -1,0 +1,10 @@
+Package: com.codedwrench.scrcpy
+Depends: adb, libsdl2, libavformat-dev, libavcodec-dev, libavutil-dev
+Name: scrcpy
+Version: 0.0.1
+Architecture: iphoneos-arm
+Description: Display and control your Android device
+Maintainer: Rick de Bondt
+Tag: compatible::ios12
+Author: Rick de Bondt
+Section: Utilities

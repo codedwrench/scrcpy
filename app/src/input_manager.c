@@ -7,6 +7,7 @@
 #include "event_converter.h"
 #include "util/lock.h"
 #include "util/log.h"
+#include <OpenGLES/ES2/gl.h>
 
 static const int ACTION_DOWN = 1;
 static const int ACTION_UP = 1 << 1;
@@ -646,19 +647,6 @@ input_manager_process_mouse_button(struct input_manager *im,
             return;
         }
 
-        // double-click on black borders resize to fit the device screen
-        if (event->button == SDL_BUTTON_LEFT && event->clicks == 2) {
-            int32_t x = event->x;
-            int32_t y = event->y;
-            screen_hidpi_scale_coords(im->screen, &x, &y);
-            SDL_Rect *r = &im->screen->rect;
-            bool outside = x < r->x || x >= r->x + r->w
-                        || y < r->y || y >= r->y + r->h;
-            if (outside) {
-                screen_resize_to_fit(im->screen);
-                return;
-            }
-        }
         // otherwise, send the click event to the device
     }
 

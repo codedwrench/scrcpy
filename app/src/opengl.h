@@ -2,7 +2,8 @@
 #define SC_OPENGL_H
 
 #include <stdbool.h>
-#include <SDL2/SDL_opengl.h>
+#include <SDL2/SDL_opengl.h>s
+#include <OpenGLES/ES2/gl.h>
 
 #include "config.h"
 

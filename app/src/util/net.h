@@ -17,7 +17,7 @@
   typedef int socket_t;
 #endif
 
-#include "config.h"
+#include "../config.h"
 
 bool
 net_init(void);

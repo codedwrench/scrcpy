@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <SDL2/SDL_platform.h>
 
-#include "config.h"
+#include "../config.h"
 #include "log.h"
 
 #ifdef __WINDOWS__

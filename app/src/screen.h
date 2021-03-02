@@ -1,6 +1,8 @@
 #ifndef SCREEN_H
 #define SCREEN_H
 
+#include <OpenGLES/ES2/gl.h>
+#include <OpenGLES/ES2/glext.h>
 #include <stdbool.h>
 #include <SDL2/SDL.h>
 #include <libavformat/avformat.h>
