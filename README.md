@@ -125,6 +125,27 @@ brew cask install android-platform-tools
 
 You can also [build the app manually][BUILD].
 
+### iOS (Jailbroken)
+
+Install the following dependencies
+- libsdl2
+- libavformat
+- libavutil
+- libavcodec
+- theos
+
+If theos is setup correctly (see: [Theos Linux Install Guide](https://github.com/theos/theos/wiki/Installation-Linux) you should be able to run:
+```bash
+cd app
+make package
+```
+This will generate a deb package for you to install through, for example: Filza
+
+Precompiled libs are obtained from:
+- https://www.libsdl.org/release/SDL2-2.0.14.zip
+- https://apt.bingner.com/debs/1443.00/libavformat-dev_4.1.3-1_iphoneos-arm.deb
+- https://apt.bingner.com/debs/1443.00/libavcodec-dev_4.1.3-1_iphoneos-arm.deb
+- https://apt.bingner.com/debs/1443.00/libavutil-dev_4.1.3-1_iphoneos-arm.deb
 
 ## Run
 
